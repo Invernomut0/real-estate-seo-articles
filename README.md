@@ -9,6 +9,7 @@ Practical guides and SEO articles for real estate agents, driving traffic to our
 ## Articles
 
 - [How to Write MLS-Ready Property Listings in 5 Minutes](how-to-write-property-listings-in-5-minutes.md) — The complete 3-phase AI workflow for writing property listings (MLS + social media + email) in 5 minutes.
+- [How to Write E-commerce Product Listings 10x Faster Using AI](how-to-sell-online-with-ai.md) — A 3-phase AI workflow for Amazon, Shopify, and Etsy sellers: research → listing creation → marketing. Platform-compliant.
 
 ## Products
 
