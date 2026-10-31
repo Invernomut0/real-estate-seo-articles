@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fair Housing Description Checker — Free Tool for Real Estate Agents</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f4f8;color:#1a1a2e;line-height:1.6}
+.container{max-width:800px;margin:0 auto;padding:20px}
+header{text-align:center;padding:40px 20px 20px;background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;border-radius:0 0 24px 24px;margin-bottom:30px}
+header h1{font-size:1.8em;margin-bottom:8px}
+header p{color:#a0aec0;font-size:1.05em}
+.badge{display:inline-block;background:#48bb78;color:#fff;padding:4px 14px;border-radius:20px;font-size:.85em;margin-bottom:12px;font-weight:600}
+.section{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.section h2{font-size:1.3em;margin-bottom:12px;color:#2d3748}
+.section h2 span{color:#3182ce}
+textarea{width:100%;min-height:150px;border:2px solid #e2e8f0;border-radius:12px;padding:16px;font-size:1em;font-family:inherit;resize:vertical;transition:border-color .2s}
+textarea:focus{outline:none;border-color:#3182ce}
+.btn{display:inline-block;background:linear-gradient(135deg,#3182ce,#2b6cb0);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1.05em;font-weight:600;cursor:pointer;transition:transform .15s,box-shadow .15s;margin-top:12px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(49,130,206,.3)}
+.btn:active{transform:translateY(0)}
+#result{margin-top:20px}
+.score-bar{height:24px;background:#e2e8f0;border-radius:12px;overflow:hidden;margin:12px 0}
+.score-fill{height:100%;border-radius:12px;transition:width .5s ease,background .5s ease}
+.flags{list-style:none;padding:0}
+.flags li{padding:10px 14px;margin:6px 0;border-radius:8px;font-size:.95em;display:flex;align-items:flex-start;gap:10px}
+.flags li.warn{background:#fffbeb;border-left:4px solid #f6ad55}
+.flags li.ok{background:#f0fff4;border-left:4px solid #48bb78}
+.flags li.danger{background:#fff5f5;border-left:4px solid #fc8181}
+.icon{font-size:1.2em;flex-shrink:0}
+.promo{text-align:center;padding:24px;background:linear-gradient(135deg,#ebf4ff,#e9d8fd);border-radius:16px;margin-top:20px;border:2px dashed #3182ce}
+.promo h3{color:#2d3748;margin-bottom:8px}
+.promo p{color:#4a5568;margin-bottom:16px;font-size:.95em}
+footer{text-align:center;padding:20px;color:#a0aec0;font-size:.85em;margin-top:20px}
+.example-btn{background:none;border:1px solid #cbd5e0;padding:8px 16px;border-radius:8px;cursor:pointer;color:#4a5568;font-size:.9em;margin-left:8px}
+.example-btn:hover{border-color:#3182ce;color:#3182ce}
+</style>
+</head>
+<body>
+<header>
+<div class="badge">FREE TOOL</div>
+<h1>Fair Housing Description Checker</h1>
+<p>Paste any property description and instantly check for potentially non-compliant language under the Fair Housing Act.</p>
+</header>
+
+<div class="container">
+<div class="section">
+<h2>📝 Your Property Description</h2>
+<p style="color:#4a5568;margin-bottom:12px">Enter a listing description (MLS, Zillow, Realtor.com, etc.). We'll scan it for Fair Housing risk areas.</p>
+<button class="example-btn" onclick="loadExample()">Load example description</button>
+<textarea id="input" placeholder="e.g., 'Charming 3-bed home in a quiet, family-friendly neighborhood. Perfect for professionals who appreciate the vibrant arts scene. Close to excellent schools and parks.'"></textarea>
+<button class="btn" onclick="check()">Check Compliance →</button>
+<div id="result"></div>
+</div>
+
+<div class="section">
+<h2>⚖️ What We Check</h2>
+<p>The Fair Housing Act protects 7 classes. This tool scans for language that may inadvertently reference any of them:</p>
+<ul style="padding-left:20px;margin-top:8px;color:#4a5568">
+<li><strong>Race, color, religion</strong> — religious references, neighborhood demographics tied to protected classes</li>
+<li><strong>National origin</strong> — language referencing ethnicity, accent, language preference</li>
+<li><strong>Sex/Gender</strong> — "his/her," "bachelor pad," "mom's dream"</li>
+<li><strong>Disability</strong> — references to accessibility needs in a way that implies preference</li>
+<li><strong>Family status</strong> — "perfect for families," "kid-friendly," "no kids" signs</li>
+</ul>
+</div>
+
+<div class="promo">
+<h3>Want MLS-ready descriptions that are 100% compliant?</h3>
+<p>Get the <strong>Real Estate Listing AI System</strong> — 15 prompts that write compliant, compelling property descriptions in under 5 minutes. Includes a compliance checklist and template pack.</p>
+<a href="https://invernomuto2.gumroad.com/l/geffl" target="_blank" class="btn" style="text-decoration:none;display:inline-block">Get the Full System — $49 →</a>
+<p style="margin-top:10px;font-size:.85em;color:#718096">Use code <strong>EARLYBIRD</strong> for 20% off (limited time)</p>
+</div>
+
+<footer>
+<p>Disclaimer: This tool provides general guidance only, not legal advice. Consult a qualified attorney for fair housing compliance questions.</p>
+<p style="margin-top:8px">Built by <a href="https://github.com/Invernomut0" style="color:#3182ce">Invernomut0</a> · Part of the PassiveIncoming project</p>
+</footer>
+</div>
+
+<script>
+const PROTECTED_PHRASES = {
+  race: /\b(colored|racial|minority|white|black|african[- ]?american|hispanic|latino|asian|native[- ]?american|integrated|segregated)\b/gi,
+  religion: /\b(christian|jewish|muslim|mormon|catholic|kosher|shabbat|church\s*community|temple\s*neighborhood|mosque|prayer|faith[- ]?based|faithful)\b/gi,
+  national: /\b(spanish[- ]?speaking|italian[- ]?heritage|irish|french[- ]?quarter|ethnic|immigrant|expat|authentic\s*(italian|mexican|chinese|asian|french|indian|middle\s?eastern))\b/gi,
+  gender: /\b(his|her|his\s*own|bachelor\s*pad|girls\s*night|guys\s*only|moms?\s*dream|dads?\s*retreat|young\s*professional|bachelor\s*apartment|perfect\s*for\s*a\s*(couple|lady|gentleman))\b/gi,
+  family: /\b(family[- ]?(friendly|oriented|oriented)?|kid[- ]?(friendly|oriented)?|child[- ]?(friendly|oriented)?|no\s*kids|perfect\s*for\s*families|great\s*for\s*kids|school\s*district|near\s*excellent\s*schools|playground|swing\s*set|nursery)\b/gi,
+  disability: /\b(wheelchair[- ]?accessible|disabled\s*access|handicap[- ]?(friendly|accessible)|accessible\s*bathroom|grab\s*bars|ramp)\b/gi
+};
+
+const CATEGORY_LABELS = {
+  race: 'Race / Color',
+  religion: 'Religion',
+  national: 'National Origin',
+  gender: 'Sex / Gender',
+  family: 'Family Status',
+  disability: 'Disability'
+};
+
+function loadExample() {
+  document.getElementById('input').value = 'Charming 3-bedroom home in a quiet, integrated neighborhood perfect for families. The open-concept kitchen flows to a sunny patio, ideal for your weekend BBQs. Located in a top-rated school district with easy access to parks and playgrounds. This move-in ready home features hardwood floors, updated bathrooms, and a spacious backyard where kids can play safely. Close to churches, synagogues, and the local mosque. Great for young professionals who appreciate the vibrant multicultural community.';
+}
+
+function check() {
+  const text = document.getElementById('input').value.trim();
+  if (!text) { alert('Please enter a property description.'); return; }
+
+  const flags = [];
+  let matched = false;
+
+  for (const [key, regex] of Object.entries(PROTECTED_PHRASES)) {
+    const matches = text.match(regex);
+    if (matches) {
+      matched = true;
+      const uniqueMatches = [...new Set(matches.map(m => m.toLowerCase()))];
+      flags.push({ category: CATEGORY_LABELS[key], matches: uniqueMatches, key });
+    }
+  }
+
+  // Check for explicit exclusion language
+  const exclusionRegex = /\b(no\s+kids|adults?\s*only|no\s*children|teenagers?\s*not\s*welcome|perfect\s*for\s*singles)\b/gi;
+  const exclusions = text.match(exclusionRegex);
+  if (exclusions) {
+    matched = true;
+    flags.push({ category: 'Explicit Exclusion', matches: [...new Set(exclusions.map(m => m.toLowerCase()))], key: 'family' });
+  }
+
+  const result = document.getElementById('result');
+  const score = matched ? Math.max(0, 100 - (flags.reduce((a, f) => a + f.matches.length, 0) * 12)) : 100;
+  const scoreColor = score >= 80 ? '#48bb78' : score >= 50 ? '#f6ad55' : '#fc8181';
+  const scoreLabel = score >= 80 ? 'Good — Low Risk' : score >= 50 ? 'Moderate — Review Needed' : 'High Risk — Revise Suggested';
+
+  let html = `<div style="text-align:center"><p style="font-size:1.2em;font-weight:600">Compliance Score: <span style="color:${scoreColor}">${score}/100</span></p>`;
+  html += `<div class="score-bar"><div class="score-fill" style="width:${score}%;background:${scoreColor}"></div></div>`;
+  html += `<p style="font-size:.9em;color:${scoreColor};margin-bottom:16px">${scoreLabel}</p>`;
+
+  if (flags.length > 0) {
+    html += `<ul class="flags">`;
+    for (const f of flags) {
+      const cls = score < 50 ? 'danger' : score < 80 ? 'warn' : 'ok';
+      const icon = score < 50 ? '⚠️' : score < 80 ? '🔍' : '✅';
+      html += `<li class="${cls}"><span class="icon">${icon}</span><div><strong>${f.category}:</strong> "${f.matches.join('", "')}"</div>`;
+      if (score >= 50) {
+        html += `<span style="font-size:.85em;color:#718096;margin-left:auto">Warning</span>`;
+      }
+      html += `</li>`;
+    }
+    html += `</ul>`;
+  } else {
+    html += `<ul class="flags"><li class="ok"><span class="icon">✅</span><div><strong>No flagged language detected.</strong> Your description appears clean of fair-housing risk areas based on this analysis.</div></li></ul>`;
+  }
+
+  html += `</div>`;
+  result.innerHTML = html;
+}
+</script>
+</body>
+</html>
