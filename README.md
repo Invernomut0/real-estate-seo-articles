@@ -13,3 +13,5 @@ Practical guides and SEO articles for real estate agents, driving traffic to our
 ## Products
 
 - [Real Estate Listing AI System](https://invernomuto2.gumroad.com/l/geffl) — 32 property-specific prompts, 3-phase workflow, Notion showing-tracker. Write MLS-ready listings in 5 minutes.
+- [Complete AI Real Estate Bundle](https://invernomut02.gumroad.com/l/bundle) — All 3 systems (RE + SPED + CRE). Save $58. $99.
+- [E-commerce Product Listing AI System](https://invernomut02.gumroad.com/l/ecommerce-product-listing) — 32 prompts for Amazon, Shopify, Etsy. 3-phase workflow. $49.
