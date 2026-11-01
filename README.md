@@ -26,10 +26,10 @@ Review of the 7 AI tools top agents use + complete workflow system.
 **32 property-specific prompts. 3-phase workflow. Notion showing-tracker. 8 property types.**
 Use code **LAUNCH50** for 50% off → **$14.50**. Lowest price ever.
 
-### [Complete AI Bundle — $99](https://invernomut02.gumroad.com/l/bundle)
+### [Complete AI Bundle — $99](https://invernomuto2.gumroad.com)
 All 3 systems (RE + SPED + CRE) = 92 prompts. Save $58. Use code **LAUNCH50** → **$49.50**.
 
-### [E-commerce Listing AI System — $49](https://invernomut02.gumroad.com/l/ecommerce-product-listing)
+### [E-commerce Listing AI System — $49](https://invernomuto2.gumroad.com)
 32 prompts for Amazon, Shopify, Etsy. 3-phase workflow (Research → Listing → Marketing).
 
 ---
